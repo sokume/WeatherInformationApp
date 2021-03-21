@@ -16,6 +16,7 @@
 package com.example.androiddevchallenge
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.border
@@ -62,6 +63,12 @@ import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TextField
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Umbrella
@@ -69,6 +76,7 @@ import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import java.text.SimpleDateFormat
 
@@ -119,69 +127,91 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-
-    Surface(color = MaterialTheme.colors.background) {
-        Column(
-            modifier = Modifier.fillMaxSize()
-        ) {
+    val (showDialog, setShowDialog) =  remember { mutableStateOf(false) }
+    Scaffold (
+        topBar = {
             TopAppBar(
                 title = { Text(text = "WeatherInformationApp") }
             )
-            LocationTab(
-                Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                viewModel
-            )
-            Row(
-                modifier = Modifier.weight(4.0f, true),
-            ) {
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight(),
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
+                Log.d("TAG","FAB Action")
+                setShowDialog(true)
+            }) {
+                Icon(
+                    imageVector = Icons.Rounded.Add,
+                    contentDescription = "Date",
+                )
+                DialogDemo(showDialog, setShowDialog)
+            }
+        },
+        content = {
+            Surface(color = MaterialTheme.colors.background) {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
 
-                    ) {
-                    WeatherInformation(
-                        viewModel = viewModel
-                    )
-                    Box(
-                        modifier = Modifier
+                    LocationTab(
+                        Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(),
-                        contentAlignment = Alignment.BottomStart
+                            .height(56.dp),
+                        viewModel
+                    )
+                    Row(
+                        modifier = Modifier.weight(4.0f, true),
                     ) {
-                        Column(
+                        BoxWithConstraints(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(96.dp)
-                        ) {
-                            VerticalSlider()
-                            HorizontalSlider()
+                                .fillMaxHeight(),
+
+                            ) {
+                            WeatherInformation(
+                                viewModel = viewModel
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(96.dp)
+                                ) {
+                                    VerticalSlider()
+                                    HorizontalSlider()
+                                }
+                            }
                         }
                     }
-                }
-            }
-            Row(
-                modifier = Modifier.weight(2.0f, true),
-            ) {
-                BoxWithConstraints(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 16.dp, bottom = 32.dp, end = 16.dp)
-                        .clip(RoundedCornerShape(2.dp))
-                        .border(width = 8.dp, color = MaterialTheme.colors.secondary),
-                ) {
-                    val weatherMessage = viewModel.weatherMessage
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        item {
-                            Text(text = weatherMessage,modifier = Modifier.padding(8.dp),style = MaterialTheme.typography.caption)
+                    Row(
+                        modifier = Modifier.weight(2.0f, true),
+                    ) {
+                        BoxWithConstraints(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(start = 16.dp, bottom = 32.dp, end = 16.dp)
+                                .clip(RoundedCornerShape(2.dp))
+                                .border(width = 8.dp, color = MaterialTheme.colors.secondary),
+                        ) {
+                            val weatherMessage = viewModel.weatherMessage
+                            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                                item {
+                                    Text(
+                                        text = weatherMessage,
+                                        modifier = Modifier.padding(start = 8.dp,top = 8.dp,end = 8.dp,bottom = 32.dp),
+                                        style = MaterialTheme.typography.caption)
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-    }
+    )
 }
 
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
@@ -702,5 +732,48 @@ fun hourToString(hour: Int): String {
         6, 7, 8, 9,
         -> "0${hourInt}"
         else -> "${hourInt}"
+    }
+}
+
+
+@Composable
+fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
+    val textState = remember { mutableStateOf(TextFieldValue()) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+            },
+            title = {
+                Text("Add Location")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.addLocation(textState.value.text)
+                        setShowDialog(false)
+                    },
+                ) {
+                    Text("Ok")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        // Change the state to close the dialog
+                        setShowDialog(false)
+                    },
+                ) {
+                    Text("Cancel")
+                }
+            },
+            text = {
+                Text("Enter the name of the location to be added")
+                TextField(
+                    value = textState.value,
+                    onValueChange = { textState.value = it }
+                )
+            },
+        )
     }
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModel
+import com.example.androiddevchallenge.model.Location
 import com.example.androiddevchallenge.model.LocationInfo
 import com.example.androiddevchallenge.model.WeatherType
 import com.google.gson.Gson
@@ -98,5 +99,11 @@ class WeatherInformationViewModel(
         weatherTypes = data.weatherTypes
         chanceOfRain = data.chanceOfRain
 
+    }
+
+    fun addLocation(value: String) {
+        val updateList = locationPositions.toMutableList()
+        updateList.add(value)
+        locationPositions = updateList
     }
 }
