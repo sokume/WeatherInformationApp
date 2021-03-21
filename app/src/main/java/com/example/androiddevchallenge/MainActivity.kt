@@ -18,7 +18,6 @@ package com.example.androiddevchallenge
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -31,7 +30,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -63,6 +61,7 @@ import com.google.gson.Gson
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Umbrella
@@ -131,7 +130,7 @@ fun MyApp() {
             LocationTab(
                 Modifier
                     .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center),
+                    .height(56.dp),
                 viewModel
             )
             Row(
@@ -168,10 +167,17 @@ fun MyApp() {
             ) {
                 BoxWithConstraints(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .background(Color.White),
+                        .fillMaxSize()
+                        .padding(start = 16.dp, bottom = 32.dp, end = 16.dp)
+                        .clip(RoundedCornerShape(2.dp))
+                        .border(width = 8.dp, color = MaterialTheme.colors.secondary),
                 ) {
+                    val weatherMessage = viewModel.weatherMessage
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        item {
+                            Text(text = weatherMessage,modifier = Modifier.padding(8.dp),style = MaterialTheme.typography.caption)
+                        }
+                    }
                 }
             }
         }
@@ -200,22 +206,24 @@ fun LocationTab(
     viewModel: WeatherInformationViewModel
 ) {
 
-    var state = remember { mutableStateOf(0) }
+    val state = remember { mutableStateOf(0) }
     val titles = viewModel.locationPositions
     ScrollableTabRow(
         selectedTabIndex = state.value,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 4.dp),
+        modifier = modifier
+            .padding(top = 4.dp,bottom = 4.dp),
         edgePadding = 16.dp,
     ) {
         titles.forEachIndexed { index, title ->
             Tab(
                 selected = state.value == index,
-                onClick = { state.value = index }) {
+                onClick = {
+                    state.value = index
+                    viewModel.changeTab(index)
+                }) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.h4,
+                    style = MaterialTheme.typography.button,
                     modifier = Modifier.padding(start = 4.dp, end = 4.dp)
                 )
             }
@@ -582,10 +590,10 @@ fun WeatherTemperaturesView(temperatures: List<Double>, width: Dp, height: Dp) {
 
 @Composable
 fun WeatherTemperaturesDetail(hour: Int, temperature: Double, width: Dp) {
-    val text = if (width < 160.dp) {
-        "${hourToString(hour)}:${temperature.toInt()}"
+    val text = if (width < 180.dp) {
+        "${hourToString(hour)}:${temperature.toInt()}℃"
     } else {
-        "${hourToString(hour)}:00 : $temperature"
+        "${hourToString(hour)}:00 : ${temperature}℃"
     }
     Row() {
         Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)

@@ -32,6 +32,8 @@ class WeatherInformationViewModel(
     var weatherTypes by mutableStateOf(initWeatherTypes)
     var chanceOfRain by mutableStateOf(initChanceOfRain)
 
+    var weatherMessage by mutableStateOf("")
+
     init {
 
     }
@@ -51,6 +53,8 @@ class WeatherInformationViewModel(
         temperatures = data.temperatures
         weatherTypes = data.weatherTypes
         chanceOfRain = data.chanceOfRain
+
+        weatherMessage = repository.getWeatherMessage(locationPositions[0])
     }
 
     fun horizontalValueChange(newValue: Float){
@@ -87,5 +91,12 @@ class WeatherInformationViewModel(
         currentVerticalLine = lineValue
     }
 
+    fun changeTab(index: Int) {
+        val data = repository.getWeatherData(locationPositions[index])
+        weatherDate = data.date
+        temperatures = data.temperatures
+        weatherTypes = data.weatherTypes
+        chanceOfRain = data.chanceOfRain
 
+    }
 }

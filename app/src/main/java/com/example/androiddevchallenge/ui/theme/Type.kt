@@ -52,12 +52,12 @@ val typography = Typography(
     ),
     button = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_semi_bold)),
-        fontSize = 14.sp,
+        fontSize = 32.sp,
         letterSpacing = 1.sp
     ),
     caption = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_semi_bold)),
-        fontSize = 12.sp,
+        fontSize = 24.sp,
         letterSpacing = 0.sp
     ),
 )

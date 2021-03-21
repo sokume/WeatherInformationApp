@@ -18,6 +18,17 @@ class WeatherDataRepository {
         )
     }
 
+    fun getWeatherMessage(locationName:String):String{
+        return "The Pacific side of the country, including Tokyo, will continue to have dry and sunny weather.\n" +
+            "Be careful with fire and prevent colds.\n" +
+            "The following is the temperature from noon to night.\n" +
+            "It will continue to be cold like January all over Japan.\n" +
+            "The highest temperature in Tokyo is 11 degrees Celsius, and 8 degrees in Nagoya.\n" +
+            "Lastly, here is the weekly forecast.\n" +
+            "The Pacific side of the country, including Tokyo, will be sunny during the holidays.\n" +
+            "This is the latest weather forecast released at 11:00 a.m."
+    }
+
     private fun makeDummy(): Triple<List<Double>, List<WeatherType>, List<Int>> {
         val temperatures = listOf<Double>(
             (12..14).random().toDouble(),
