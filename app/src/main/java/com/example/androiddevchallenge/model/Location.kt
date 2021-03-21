@@ -1,16 +1,7 @@
-package com.example.androiddevchallenge
+package com.example.androiddevchallenge.model
 
-import com.chibatching.kotpref.KotprefModel
 import com.google.gson.annotations.SerializedName
 
-object LocationSave : KotprefModel() {
-    var saveInfo by stringPref()
-}
-
-data class LocationInfo(
-    @SerializedName("items")
-    var items : List<Location> = listOf()
-)
 data class Location(
     @SerializedName("locationName")
     var locationName : String,
