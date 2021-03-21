@@ -32,7 +32,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -64,6 +63,10 @@ import com.google.gson.Gson
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.Image
+import androidx.compose.material.icons.rounded.CalendarToday
+import androidx.compose.material.icons.rounded.Speed
+import androidx.compose.material.icons.rounded.Umbrella
+import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -201,7 +204,9 @@ fun LocationTab(
     val titles = viewModel.locationPositions
     ScrollableTabRow(
         selectedTabIndex = state.value,
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 4.dp),
         edgePadding = 16.dp,
     ) {
         titles.forEachIndexed { index, title ->
@@ -249,23 +254,69 @@ fun WeatherInformation(
                         .width(leftTopWidth)
                         .height(leftTopHeight)
                 ) {
-                    WeatherDayView(viewModel.weatherDate, leftTopWidth, leftTopHeight)
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.TopStart
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.CalendarToday,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(32.dp),
+                            contentDescription = "Date",
+                            tint = Color.Gray
+                        )
+                    }
+                    WeatherDayView(
+                        viewModel.weatherDate,
+                        leftTopWidth,
+                        leftTopHeight
+                    )
                 }
                 Box(
                     Modifier
                         .width(rightTopWidth)
                         .height(rightTopHeight)
                 ) {
-                    WeatherTypeView(viewModel.weatherTypes, rightTopWidth, rightTopHeight)
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.TopEnd
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.WbSunny,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(32.dp),
+                            contentDescription = "Date",
+                            tint = Color.Gray
+                        )
+                    }
+                    WeatherTypeView(
+                        viewModel.weatherTypes,
+                        rightTopWidth,
+                        rightTopHeight
+                    )
                 }
             }
             Row() {
-
                 Box(
                     Modifier
                         .width(leftBottomWidth)
                         .height(leftBottomHeight)
                 ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomStart
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Speed,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(32.dp),
+                            contentDescription = "Date",
+                            tint = Color.Gray
+                        )
+                    }
                     WeatherTemperaturesView(
                         viewModel.temperatures,
                         leftBottomWidth,
@@ -277,6 +328,20 @@ fun WeatherInformation(
                         .width(rightBottomWidth)
                         .height(rightBottomHeight)
                 ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.BottomEnd
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Umbrella,
+                            modifier = Modifier
+                                .padding(4.dp)
+                                .size(32.dp),
+                            contentDescription = "Date",
+                            tint = Color.Gray
+                        )
+                    }
+
                     WeatherChanceOfRainView(
                         viewModel.chanceOfRain,
                         rightBottomWidth,
@@ -337,13 +402,13 @@ fun WeatherDayView(weatherDate: Date, width: Dp, height: Dp) {
         contentAlignment = Alignment.Center
     ) {
         val formatPatten = when {
-            width < 100.dp -> "dd"
+            width < 120.dp -> "dd"
             width < 200.dp -> "MM/dd"
             else -> "MM/dd, E"
         }
         val format = SimpleDateFormat(formatPatten, Locale.getDefault())
         val dateString = format.format(weatherDate)
-        Text(text = dateString, style = MaterialTheme.typography.h3)
+        Text(text = dateString, style = MaterialTheme.typography.h2)
     }
 }
 
@@ -428,12 +493,12 @@ fun WeatherTypeView(types: List<WeatherType>, width: Dp, height: Dp) {
 fun WeatherTypeDetail(hour: Int, type: WeatherType, width: Dp) {
     val image: Painter = painterResource(id = type.WeatherIconRes())
     val text = if (width < 150.dp) {
-        "$hour"
+        "${hourToString(hour)}:"
     } else {
-        "$hour:00 : "
+        "${hourToString(hour)}:00 : "
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h4, textAlign = TextAlign.Center)
+        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
         Image(image, "", modifier = Modifier.size(40.dp), contentScale = ContentScale.Fit)
     }
 }
@@ -517,13 +582,13 @@ fun WeatherTemperaturesView(temperatures: List<Double>, width: Dp, height: Dp) {
 
 @Composable
 fun WeatherTemperaturesDetail(hour: Int, temperature: Double, width: Dp) {
-    val text = if (width < 150.dp) {
-        "$hour : $temperature"
+    val text = if (width < 160.dp) {
+        "${hourToString(hour)}:${temperature.toInt()}"
     } else {
-        "$hour:00 : $temperature"
+        "${hourToString(hour)}:00 : $temperature"
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h4, textAlign = TextAlign.Center)
+        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
     }
 }
 
@@ -607,13 +672,27 @@ fun WeatherChanceOfRainView(chanceOfRain: List<Int>, width: Dp, height: Dp) {
 
 @Composable
 fun WeatherChanceOfRainDetail(hour: Int, chanceOfRain: Int, width: Dp) {
-    
-    val text = if (width < 150.dp) {
-        "$hour : ${chanceOfRain}%"
+
+    val text = if (width < 160.dp) {
+        "${hourToString(hour)}:${chanceOfRain}%"
     } else {
-        "$hour:00 : ${chanceOfRain}%"
+        "${hourToString(hour)}:00 : ${chanceOfRain}%"
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h4, textAlign = TextAlign.Center)
+        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
+    }
+}
+
+fun hourToString(hour: Int): String {
+    val hourInt = if (hour > 23) {
+        hour - 24
+    } else {
+        hour
+    }
+    return when (hourInt) {
+        0, 1, 2, 3, 4, 5,
+        6, 7, 8, 9,
+        -> "0${hourInt}"
+        else -> "${hourInt}"
     }
 }

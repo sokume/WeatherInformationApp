@@ -57,11 +57,11 @@ class WeatherInformationViewModel(
         currentHorizontalValue = newValue
         val horizontalLine = newValue + newValue
         val lineValue = when {
-            horizontalLine < 0.4 -> {
-                0.4F
+            horizontalLine < 0.45 -> {
+                0.45F
             }
-            horizontalLine > 1.6 -> {
-                1.6F
+            horizontalLine > 1.55 -> {
+                1.55F
             }
             else -> {
                 horizontalLine
