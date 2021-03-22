@@ -20,5 +20,3 @@ import com.chibatching.kotpref.KotprefModel
 object LocationSave : KotprefModel() {
     var saveInfo by stringPref()
 }
-
-
