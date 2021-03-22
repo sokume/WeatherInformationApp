@@ -31,8 +31,7 @@ private val DarkColorPalette = darkColors(
     onSecondary = dark_on_secondary,
     onBackground = dark_on_background,
     onSurface = dark_on_surface,
-
-    )
+)
 
 private val LightColorPalette = lightColors(
     primary = light_primary,
@@ -45,8 +44,7 @@ private val LightColorPalette = lightColors(
     onSecondary = light_on_secondary,
     onBackground = light_on_background,
     onSurface = light_on_surface,
-
-    )
+)
 
 @Composable
 fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {

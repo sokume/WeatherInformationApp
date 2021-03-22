@@ -30,7 +30,6 @@ val light_on_secondary = Color(0xFFFFFFFF)
 val light_on_background = Color(0xFFFFFFFF)
 val light_on_surface = Color(0xFF232323)
 
-
 // Dark
 
 val dark_primary = Color(0xFFe5ffff) //
@@ -45,5 +44,3 @@ val dark_on_secondary = Color(0xFF232323)
 
 val dark_on_background = Color(0xFFFFFFFF)
 val dark_on_surface = Color(0xD9FFFFFF)
-
-

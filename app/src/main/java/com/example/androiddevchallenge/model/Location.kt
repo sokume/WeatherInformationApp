@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Location(
     @SerializedName("locationName")
-    var locationName : String,
+    var locationName: String,
     @SerializedName("latitude")
     var latitude: String,
     @SerializedName("longitude")

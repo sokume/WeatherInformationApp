@@ -36,19 +36,19 @@ sealed class WeatherType {
 
     object CloudySun : WeatherType() {
         override fun weatherIconRes(): Int {
-            return R.drawable.ic_cloud
+            return R.drawable.ic_cloud_sun
         }
     }
 
     object Rain : WeatherType() {
         override fun weatherIconRes(): Int {
-            return R.drawable.ic_cloud
+            return R.drawable.ic_rain_light
         }
     }
 
     object Snow : WeatherType() {
         override fun weatherIconRes(): Int {
-            return R.drawable.ic_cloud
+            return R.drawable.ic_snow_1
         }
     }
 }

@@ -19,5 +19,5 @@ import com.google.gson.annotations.SerializedName
 
 data class LocationInfo(
     @SerializedName("items")
-    var items : List<Location> = listOf()
+    var items: List<Location> = listOf()
 )
