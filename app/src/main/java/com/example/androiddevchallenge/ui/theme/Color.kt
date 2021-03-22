@@ -17,17 +17,17 @@ package com.example.androiddevchallenge.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val light_primary = Color(0xFF4ebaaa)
-val light_secondary = Color(0xFF67daff)
-val light_variant = Color(0xFFBC6977)
+val light_primary = Color(0xFF4db6ac)
+val light_secondary = Color(0xFF007ac1)
+val light_variant = Color(0xFF00867d)
 
-val light_background = Color(0xFFFFFFFF)
+val light_background = Color(0xFF4db6ac)
 val light_surface = Color(0xFFFFFFFF)
 
 val light_on_primary = Color(0xFF232323)
 val light_on_secondary = Color(0xFFFFFFFF)
 
-val light_on_background = Color(0xFF232323)
+val light_on_background = Color(0xFFFFFFFF)
 val light_on_surface = Color(0xFF232323)
 
 

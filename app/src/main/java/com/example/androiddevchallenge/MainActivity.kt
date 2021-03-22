@@ -293,6 +293,7 @@ fun LocationTab(
         modifier = modifier
             .padding(top = 4.dp, bottom = 4.dp),
         edgePadding = 16.dp,
+        backgroundColor = MaterialTheme.colors.surface
     ) {
         titles.forEachIndexed { index, title ->
             Tab(
@@ -531,14 +532,14 @@ fun WeatherTypeView(types: List<WeatherType>, width: Dp, height: Dp) {
                 }
             }
             height < 150.dp -> {
-                Column() {
+                Column {
                     WeatherTypeDetail(currentHour, types[0], width)
                     currentHour++
                     WeatherTypeDetail(currentHour, types[1], width)
                 }
             }
             height < 200.dp -> {
-                Column() {
+                Column {
                     WeatherTypeDetail(currentHour, types[0], width)
                     currentHour++
                     WeatherTypeDetail(currentHour, types[1], width)
