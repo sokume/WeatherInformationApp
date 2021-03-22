@@ -49,10 +49,6 @@ class WeatherInformationViewModel(
 
     var weatherMessage by mutableStateOf("")
 
-    init {
-
-    }
-
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onStart() {
         horizontalValueChange(0.5F)

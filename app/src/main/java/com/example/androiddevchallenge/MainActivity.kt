@@ -593,7 +593,7 @@ fun WeatherTypeView(types: List<WeatherType>, width: Dp, height: Dp) {
 
 @Composable
 fun WeatherTypeDetail(hour: Int, type: WeatherType, width: Dp) {
-    val image: Painter = painterResource(id = type.WeatherIconRes())
+    val image: Painter = painterResource(id = type.weatherIconRes())
     val text = if (width < 150.dp) {
         "${hourToString(hour)}:"
     } else {
