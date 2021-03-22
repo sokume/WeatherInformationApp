@@ -160,12 +160,12 @@ fun MyApp() {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                setShowDialog(true)
-            }
+                    setShowDialog(true)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
-                    contentDescription = "Date",
+                    contentDescription = "Add Location",
                 )
                 DialogDemo(showDialog, setShowDialog)
             }
@@ -242,7 +242,7 @@ fun WeatherLayout() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
-                ) {
+            ) {
                 WeatherInformation(
                     viewModel = viewModel
                 )
@@ -299,7 +299,8 @@ fun LocationTab(
                 onClick = {
                     state.value = index
                     viewModel.changeTab(index)
-                }) {
+                }
+            ) {
                 Text(
                     text = title,
                     style = MaterialTheme.typography.button,
@@ -371,7 +372,7 @@ fun WeatherInformation(
                             modifier = Modifier
                                 .padding(4.dp)
                                 .size(32.dp),
-                            contentDescription = "Date",
+                            contentDescription = "Weather Type",
                             tint = Color.Gray
                         )
                     }
@@ -397,7 +398,7 @@ fun WeatherInformation(
                             modifier = Modifier
                                 .padding(4.dp)
                                 .size(32.dp),
-                            contentDescription = "Date",
+                            contentDescription = "Temperatures",
                             tint = Color.Gray
                         )
                     }
@@ -421,7 +422,7 @@ fun WeatherInformation(
                             modifier = Modifier
                                 .padding(4.dp)
                                 .size(32.dp),
-                            contentDescription = "Date",
+                            contentDescription = "Chance Of Rain",
                             tint = Color.Gray
                         )
                     }
@@ -446,7 +447,7 @@ fun VerticalSlider() {
     ) {
         Icon(
             Icons.Rounded.SwapVert,
-            "",
+            "Vertical Slider Icon",
             Modifier.size(32.dp),
             tint = MaterialTheme.colors.secondary
         )
@@ -471,7 +472,7 @@ fun HorizontalSlider() {
     ) {
         Icon(
             Icons.Rounded.SwapHoriz,
-            "",
+            "Horizontal Slider Icon",
             Modifier.size(32.dp),
             tint = MaterialTheme.colors.secondary,
         )
@@ -503,7 +504,10 @@ fun WeatherDayView(weatherDate: Date, width: Dp) {
         }
         val format = SimpleDateFormat(formatPatten, Locale.getDefault())
         val dateString = format.format(weatherDate)
-        Text(text = dateString, style = MaterialTheme.typography.h2)
+        Text(
+            text = dateString,
+            style = MaterialTheme.typography.h2
+        )
     }
 }
 
@@ -514,7 +518,10 @@ fun WeatherTypeView(types: List<WeatherType>, width: Dp, height: Dp) {
             .fillMaxSize()
             .padding(1.dp)
             .clip(RoundedCornerShape(2.dp))
-            .border(width = 2.dp, color = MaterialTheme.colors.secondary),
+            .border(
+                width = 2.dp,
+                color = MaterialTheme.colors.secondary
+            ),
         contentAlignment = Alignment.Center
     ) {
         val format = SimpleDateFormat("HH", Locale.getDefault())
@@ -600,7 +607,7 @@ fun WeatherTypeDetail(hour: Int, type: WeatherType, width: Dp) {
         )
         Image(
             image,
-            "",
+            "Weather Type Icon",
             modifier = Modifier.size(40.dp),
             contentScale = ContentScale.Fit,
         )
@@ -797,7 +804,7 @@ fun hourToString(hour: Int): String {
         0, 1, 2, 3, 4, 5,
         6, 7, 8, 9,
         -> "0${hourInt}"
-        else -> "${hourInt}"
+        else -> "$hourInt"
     }
 }
 
