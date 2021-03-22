@@ -62,6 +62,7 @@ import com.google.gson.Gson
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -406,6 +407,7 @@ fun VerticalSlider() {
         Slider(
             value = value,
             onValueChange = { newValue -> viewModel.verticalValueChange(newValue) },
+
         )
     }
 }
@@ -626,7 +628,7 @@ fun WeatherTemperaturesDetail(hour: Int, temperature: Double, width: Dp) {
         "${hourToString(hour)}:00 : ${temperature}℃"
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
+        Text(text = text, style = MaterialTheme.typography.h3, textAlign = TextAlign.Center)
     }
 }
 
@@ -717,7 +719,7 @@ fun WeatherChanceOfRainDetail(hour: Int, chanceOfRain: Int, width: Dp) {
         "${hourToString(hour)}:00 : ${chanceOfRain}%"
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
+        Text(text = text, style = MaterialTheme.typography.h3, textAlign = TextAlign.Center)
     }
 }
 
@@ -745,7 +747,7 @@ fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
             onDismissRequest = {
             },
             title = {
-                Text("Add Location")
+                Text("Add Location Name")
             },
             confirmButton = {
                 Button(
@@ -768,12 +770,13 @@ fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
                 }
             },
             text = {
-                Text("Enter the name of the location to be added")
                 TextField(
                     value = textState.value,
-                    onValueChange = { textState.value = it }
+                    onValueChange = { textState.value = it },
+                    maxLines = 1,
                 )
             },
+            backgroundColor = MaterialTheme.colors.background
         )
     }
 }

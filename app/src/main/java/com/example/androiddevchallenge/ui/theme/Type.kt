@@ -35,6 +35,12 @@ val typography = Typography(
         fontSize = 32.sp,
         letterSpacing = 0.15.sp
     ),
+    h3 = TextStyle(
+        fontFamily = FontFamily(Font(R.font.nunito_sans_bold)),
+        fontSize = 26.sp,
+        letterSpacing = 0.15.sp
+    ),
+
     subtitle1 = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_light)),
         fontSize = 16.sp,
@@ -52,7 +58,7 @@ val typography = Typography(
     ),
     button = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_semi_bold)),
-        fontSize = 32.sp,
+        fontSize = 24.sp,
         letterSpacing = 1.sp
     ),
     caption = TextStyle(
