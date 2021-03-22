@@ -80,9 +80,9 @@ import com.example.androiddevchallenge.model.LocationInfo
 import com.example.androiddevchallenge.model.WeatherType
 import com.example.androiddevchallenge.ui.theme.MyTheme
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.text.SimpleDateFormat
 
 private val viewModel = WeatherInformationViewModel()
 
@@ -141,12 +141,13 @@ fun MyApp() {
                     Text(text = "WeatherInformationApp")
                 },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        when (showMenu) {
-                            true -> setShowMenu(false)
-                            false -> setShowMenu(true)
+                    IconButton(
+                        onClick = {
+                            when (showMenu) {
+                                true -> setShowMenu(false)
+                                false -> setShowMenu(true)
+                            }
                         }
-                    }
                     ) {
                         Icon(Icons.Filled.Menu, "")
                     }
@@ -157,7 +158,8 @@ fun MyApp() {
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            FloatingActionButton(
+                onClick = {
                 setShowDialog(true)
             }
             ) {
@@ -240,7 +242,6 @@ fun WeatherLayout() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(),
-
                 ) {
                 WeatherInformation(
                     viewModel = viewModel
@@ -331,8 +332,6 @@ fun WeatherInformation(
         val leftBottomHeight = itemHeight * (2.0F - vLine)
         val rightBottomWidth = itemWidth * (2.0F - hLine)
         val rightBottomHeight = itemHeight * (2.0F - vLine)
-
-
         Column() {
             Row {
                 Box(
@@ -426,7 +425,6 @@ fun WeatherInformation(
                             tint = Color.Gray
                         )
                     }
-
                     WeatherChanceOfRainView(
                         viewModel.chanceOfRain,
                         rightBottomWidth,
