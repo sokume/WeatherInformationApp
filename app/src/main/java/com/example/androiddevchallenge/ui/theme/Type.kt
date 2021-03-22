@@ -48,12 +48,12 @@ val typography = Typography(
     ),
     body1 = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_light)),
-        fontSize = 14.sp,
+        fontSize = 16.sp,
         letterSpacing = 0.sp
     ),
     body2 = TextStyle(
         fontFamily = FontFamily(Font(R.font.nunito_sans_light)),
-        fontSize = 12.sp,
+        fontSize = 14.sp,
         letterSpacing = 0.sp
     ),
     button = TextStyle(

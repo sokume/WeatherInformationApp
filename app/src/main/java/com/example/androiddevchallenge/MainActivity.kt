@@ -75,6 +75,8 @@ import androidx.compose.material.SliderColors
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldColors
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.CalendarToday
@@ -445,7 +447,7 @@ fun VerticalSlider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp,end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp)
     ) {
         Icon(
             Icons.Rounded.SwapVert,
@@ -470,7 +472,7 @@ fun HorizontalSlider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp,end = 16.dp)
+            .padding(start = 16.dp, end = 16.dp)
     ) {
         Icon(
             Icons.Rounded.SwapHoriz,
@@ -813,12 +815,13 @@ fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
             onDismissRequest = {
             },
             title = {
-                Text("Add Location Name")
+                Text("Add Location Name\n")
             },
             confirmButton = {
                 Button(
                     onClick = {
                         viewModel.addLocation(textState.value.text)
+                        textState.value = TextFieldValue()
                         setShowDialog(false)
                     },
                 ) {
@@ -829,6 +832,7 @@ fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
                 Button(
                     onClick = {
                         // Change the state to close the dialog
+                        textState.value = TextFieldValue()
                         setShowDialog(false)
                     },
                 ) {
@@ -839,7 +843,12 @@ fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {
                 TextField(
                     value = textState.value,
                     onValueChange = { textState.value = it },
-                    maxLines = 1,
+                    singleLine = true,
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = Color.LightGray
+                    ),
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = MaterialTheme.typography.body2
                 )
             },
             backgroundColor = MaterialTheme.colors.background
