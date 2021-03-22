@@ -64,21 +64,30 @@ import java.util.Locale
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SliderColors
+import androidx.compose.material.SliderDefaults
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Umbrella
 import androidx.compose.material.icons.rounded.WbSunny
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import com.example.androiddevchallenge.ui.theme.shapes
 import java.text.SimpleDateFormat
 
 private val viewModel = WeatherInformationViewModel()
@@ -128,16 +137,33 @@ class MainActivity : AppCompatActivity() {
 // Start building your app here!
 @Composable
 fun MyApp() {
-    val (showDialog, setShowDialog) =  remember { mutableStateOf(false) }
-    Scaffold (
+    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
+    val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
+
+    Log.d("TAG,","showMenu $showMenu ")
+    Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "WeatherInformationApp") }
+                title = {
+                    Text(text = "WeatherInformationApp")
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        when(showMenu){
+                            true -> setShowMenu(false)
+                            false -> setShowMenu(true)
+                        }
+                    }) {
+                        Icon(Icons.Filled.Menu,"")
+                    }
+                },
+                backgroundColor = MaterialTheme.colors.primary,
+                contentColor = MaterialTheme.colors.onPrimary,
+                elevation = 0.dp
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                Log.d("TAG","FAB Action")
                 setShowDialog(true)
             }) {
                 Icon(
@@ -148,68 +174,15 @@ fun MyApp() {
             }
         },
         content = {
-            Surface(color = MaterialTheme.colors.background) {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-
-                    LocationTab(
-                        Modifier
-                            .fillMaxWidth()
-                            .height(56.dp),
-                        viewModel
-                    )
-                    Row(
-                        modifier = Modifier.weight(4.0f, true),
-                    ) {
-                        BoxWithConstraints(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(),
-
-                            ) {
-                            WeatherInformation(
-                                viewModel = viewModel
-                            )
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight(),
-                                contentAlignment = Alignment.BottomStart
-                            ) {
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(96.dp)
-                                ) {
-                                    VerticalSlider()
-                                    HorizontalSlider()
-                                }
-                            }
-                        }
-                    }
-                    Row(
-                        modifier = Modifier.weight(2.0f, true),
-                    ) {
-                        BoxWithConstraints(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(start = 16.dp, bottom = 32.dp, end = 16.dp)
-                                .clip(RoundedCornerShape(2.dp))
-                                .border(width = 8.dp, color = MaterialTheme.colors.secondary),
-                        ) {
-                            val weatherMessage = viewModel.weatherMessage
-                            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                                item {
-                                    Text(
-                                        text = weatherMessage,
-                                        modifier = Modifier.padding(start = 8.dp,top = 8.dp,end = 8.dp,bottom = 32.dp),
-                                        style = MaterialTheme.typography.caption)
-                                }
-                            }
-                        }
-                    }
-                }
+            // Slider
+            SliderLayout()
+            // Main
+            Card(
+                shape = AbsoluteRoundedCornerShape(topLeft = 24.dp),
+                modifier = if (showMenu){Modifier.padding(top = 160.dp)}else{Modifier},
+                backgroundColor = MaterialTheme.colors.surface
+            ) {
+                WeatherLayout()
             }
         }
     )
@@ -232,6 +205,80 @@ fun DarkPreview() {
 }
 
 @Composable
+fun SliderLayout(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth(),
+        contentAlignment = Alignment.TopCenter,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(112.dp)
+                .padding(top = 16.dp)
+        ) {
+            VerticalSlider()
+            HorizontalSlider()
+        }
+    }
+}
+
+@Composable
+fun WeatherLayout() {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        LocationTab(
+            Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            viewModel
+        )
+        Row(
+            modifier = Modifier.weight(4.0f, true),
+        ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+
+                ) {
+                WeatherInformation(
+                    viewModel = viewModel
+                )
+            }
+        }
+        Row(
+            modifier = Modifier.weight(2.0f, true),
+        ) {
+            BoxWithConstraints(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, bottom = 32.dp, end = 16.dp)
+                    .clip(RoundedCornerShape(2.dp))
+                    .border(width = 8.dp, color = MaterialTheme.colors.secondary),
+            ) {
+                val weatherMessage = viewModel.weatherMessage
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    item {
+                        Text(
+                            text = weatherMessage,
+                            modifier = Modifier.padding(
+                                start = 8.dp,
+                                top = 8.dp,
+                                end = 8.dp,
+                                bottom = 32.dp
+                            ),
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun LocationTab(
     modifier: Modifier = Modifier,
     viewModel: WeatherInformationViewModel
@@ -242,7 +289,7 @@ fun LocationTab(
     ScrollableTabRow(
         selectedTabIndex = state.value,
         modifier = modifier
-            .padding(top = 4.dp,bottom = 4.dp),
+            .padding(top = 4.dp, bottom = 4.dp),
         edgePadding = 16.dp,
     ) {
         titles.forEachIndexed { index, title ->
@@ -270,7 +317,7 @@ fun WeatherInformation(
     BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
-            .padding(start = 16.dp, top = 16.dp, bottom = 96.dp, end = 16.dp),
+            .padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 16.dp),
     ) {
         val vLine = viewModel.currentVerticalLine
         val hLine = viewModel.currentHorizontalLine
@@ -398,16 +445,21 @@ fun VerticalSlider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp,end = 16.dp)
     ) {
         Icon(
-            Icons.Rounded.SwapVert, "",
-            Modifier.size(48.dp)
+            Icons.Rounded.SwapVert,
+            "",
+            Modifier.size(32.dp),
+            tint = MaterialTheme.colors.secondary
         )
         Slider(
             value = value,
             onValueChange = { newValue -> viewModel.verticalValueChange(newValue) },
-
+            colors = SliderDefaults.colors(
+                activeTrackColor = MaterialTheme.colors.secondary,
+                thumbColor = MaterialTheme.colors.secondary
+            )
         )
     }
 }
@@ -418,15 +470,21 @@ fun HorizontalSlider() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp, end = 16.dp)
+            .padding(start = 16.dp,end = 16.dp)
     ) {
         Icon(
-            Icons.Rounded.SwapHoriz, "",
-            Modifier.size(48.dp)
+            Icons.Rounded.SwapHoriz,
+            "",
+            Modifier.size(32.dp),
+            tint = MaterialTheme.colors.secondary,
         )
         Slider(
             value = value,
             onValueChange = { newValue -> viewModel.horizontalValueChange(newValue) },
+            colors = SliderDefaults.colors(
+                activeTrackColor = MaterialTheme.colors.secondary,
+                thumbColor = MaterialTheme.colors.secondary
+            )
         )
     }
 }
@@ -538,8 +596,17 @@ fun WeatherTypeDetail(hour: Int, type: WeatherType, width: Dp) {
         "${hourToString(hour)}:00 : "
     }
     Row() {
-        Text(text = text, style = MaterialTheme.typography.h2, textAlign = TextAlign.Center)
-        Image(image, "", modifier = Modifier.size(40.dp), contentScale = ContentScale.Fit)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.h2,
+            textAlign = TextAlign.Center
+        )
+        Image(
+            image,
+            "",
+            modifier = Modifier.size(40.dp),
+            contentScale = ContentScale.Fit,
+        )
     }
 }
 
@@ -736,7 +803,6 @@ fun hourToString(hour: Int): String {
         else -> "${hourInt}"
     }
 }
-
 
 @Composable
 fun DialogDemo(showDialog: Boolean, setShowDialog: (Boolean) -> Unit) {

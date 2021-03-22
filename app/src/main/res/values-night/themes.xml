@@ -13,7 +13,7 @@
     <style name="Theme.AndroidDevChallenge" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#005b4f</item>
-        <item name="colorPrimaryVariant">#BC6977</item>
+        <item name="colorPrimaryVariant">#82ada9</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#007ac1</item>
