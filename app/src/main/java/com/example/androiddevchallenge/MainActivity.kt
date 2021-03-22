@@ -36,7 +36,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Slider
-import androidx.compose.material.Surface
 import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -62,7 +61,6 @@ import com.google.gson.Gson
 import java.util.Date
 import java.util.Locale
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.AlertDialog
@@ -71,11 +69,8 @@ import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SliderColors
 import androidx.compose.material.SliderDefaults
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.rounded.Add
@@ -83,13 +78,11 @@ import androidx.compose.material.icons.rounded.CalendarToday
 import androidx.compose.material.icons.rounded.Speed
 import androidx.compose.material.icons.rounded.Umbrella
 import androidx.compose.material.icons.rounded.WbSunny
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import com.example.androiddevchallenge.ui.theme.shapes
 import java.text.SimpleDateFormat
 
 private val viewModel = WeatherInformationViewModel()
@@ -337,7 +330,7 @@ fun WeatherInformation(
 
 
         Column() {
-            Row() {
+            Row {
                 Box(
                     Modifier
                         .width(leftTopWidth)
@@ -358,8 +351,7 @@ fun WeatherInformation(
                     }
                     WeatherDayView(
                         viewModel.weatherDate,
-                        leftTopWidth,
-                        leftTopHeight
+                        leftTopWidth
                     )
                 }
                 Box(
@@ -493,7 +485,7 @@ fun HorizontalSlider() {
 }
 
 @Composable
-fun WeatherDayView(weatherDate: Date, width: Dp, height: Dp) {
+fun WeatherDayView(weatherDate: Date, width: Dp) {
     Box(
         modifier = Modifier
             .fillMaxSize()
