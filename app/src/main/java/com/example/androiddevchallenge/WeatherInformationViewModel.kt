@@ -29,7 +29,7 @@ import java.util.Date
 
 class WeatherInformationViewModel(
     var repository: WeatherDataRepository = WeatherDataRepository()
-) : ViewModel() , LifecycleObserver {
+) : ViewModel(), LifecycleObserver {
 
     var locationPositions: List<String> by mutableStateOf(listOf("地点名"))
 
@@ -72,7 +72,7 @@ class WeatherInformationViewModel(
         weatherMessage = repository.getWeatherMessage(locationPositions[0])
     }
 
-    fun horizontalValueChange(newValue: Float){
+    fun horizontalValueChange(newValue: Float) {
         currentHorizontalValue = newValue
         val horizontalLine = newValue + newValue
         val lineValue = when {
@@ -89,7 +89,7 @@ class WeatherInformationViewModel(
         currentHorizontalLine = lineValue
     }
 
-    fun verticalValueChange(newValue: Float){
+    fun verticalValueChange(newValue: Float) {
         currentVerticalValue = newValue
         val verticalLine = newValue + newValue
         val lineValue = when {
@@ -112,7 +112,6 @@ class WeatherInformationViewModel(
         temperatures = data.temperatures
         weatherTypes = data.weatherTypes
         chanceOfRain = data.chanceOfRain
-
     }
 
     fun addLocation(value: String) {

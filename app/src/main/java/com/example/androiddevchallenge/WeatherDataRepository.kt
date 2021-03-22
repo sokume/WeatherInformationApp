@@ -33,7 +33,7 @@ class WeatherDataRepository {
         )
     }
 
-    fun getWeatherMessage(locationName:String):String{
+    fun getWeatherMessage(locationName: String): String {
         return "The Pacific side of the country, including Tokyo, will continue to have dry and sunny weather.\n" +
             "Be careful with fire and prevent colds.\n" +
             "The following is the temperature from noon to night.\n" +

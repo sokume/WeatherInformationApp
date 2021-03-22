@@ -135,7 +135,6 @@ fun MyApp() {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
     val (showMenu, setShowMenu) = remember { mutableStateOf(false) }
 
-    Log.d("TAG,","showMenu $showMenu ")
     Scaffold(
         topBar = {
             TopAppBar(
@@ -144,12 +143,13 @@ fun MyApp() {
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        when(showMenu){
+                        when (showMenu) {
                             true -> setShowMenu(false)
                             false -> setShowMenu(true)
                         }
-                    }) {
-                        Icon(Icons.Filled.Menu,"")
+                    }
+                    ) {
+                        Icon(Icons.Filled.Menu, "")
                     }
                 },
                 backgroundColor = MaterialTheme.colors.primary,
@@ -160,7 +160,8 @@ fun MyApp() {
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 setShowDialog(true)
-            }) {
+            }
+            ) {
                 Icon(
                     imageVector = Icons.Rounded.Add,
                     contentDescription = "Date",
@@ -174,7 +175,11 @@ fun MyApp() {
             // Main
             Card(
                 shape = AbsoluteRoundedCornerShape(topLeft = 24.dp),
-                modifier = if (showMenu){Modifier.padding(top = 160.dp)}else{Modifier},
+                modifier = if (showMenu) {
+                    Modifier.padding(top = 160.dp)
+                } else {
+                    Modifier
+                },
                 backgroundColor = MaterialTheme.colors.surface
             ) {
                 WeatherLayout()
@@ -200,7 +205,7 @@ fun DarkPreview() {
 }
 
 @Composable
-fun SliderLayout(){
+fun SliderLayout() {
     Box(
         modifier = Modifier
             .fillMaxWidth(),
