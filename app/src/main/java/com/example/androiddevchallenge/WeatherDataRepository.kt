@@ -18,7 +18,6 @@ package com.example.androiddevchallenge
 import com.example.androiddevchallenge.model.WeatherData
 import com.example.androiddevchallenge.model.WeatherType
 import java.util.Date
-import kotlin.random.Random
 
 class WeatherDataRepository {
 

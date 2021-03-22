@@ -696,7 +696,7 @@ fun WeatherTemperaturesDetail(hour: Int, temperature: Double, width: Dp) {
     val text = if (width < 180.dp) {
         "${hourToString(hour)}:${temperature.toInt()}℃"
     } else {
-        "${hourToString(hour)}:00 : ${temperature}℃"
+        "${hourToString(hour)}:00 : $temperature℃"
     }
     Row() {
         Text(text = text, style = MaterialTheme.typography.h3, textAlign = TextAlign.Center)
@@ -785,9 +785,9 @@ fun WeatherChanceOfRainView(chanceOfRain: List<Int>, width: Dp, height: Dp) {
 fun WeatherChanceOfRainDetail(hour: Int, chanceOfRain: Int, width: Dp) {
 
     val text = if (width < 160.dp) {
-        "${hourToString(hour)}:${chanceOfRain}%"
+        "${hourToString(hour)}:$chanceOfRain%"
     } else {
-        "${hourToString(hour)}:00 : ${chanceOfRain}%"
+        "${hourToString(hour)}:00 : $chanceOfRain%"
     }
     Row() {
         Text(text = text, style = MaterialTheme.typography.h3, textAlign = TextAlign.Center)
@@ -803,7 +803,7 @@ fun hourToString(hour: Int): String {
     return when (hourInt) {
         0, 1, 2, 3, 4, 5,
         6, 7, 8, 9,
-        -> "0${hourInt}"
+        -> "0$hourInt"
         else -> "$hourInt"
     }
 }
